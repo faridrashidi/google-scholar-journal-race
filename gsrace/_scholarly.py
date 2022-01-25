@@ -115,8 +115,10 @@ class _Scholarly:
 
         .. testcode::
 
-            search_query = scholarly.search_pubs('Perception of physical stability and center of mass of 3D objects')
-            scholarly.pprint(next(search_query)) # in order to pretty print the result
+            search_query = scholarly.search_pubs(
+                "Perception of physical stability and center of mass of 3D objects"
+            )
+            scholarly.pprint(next(search_query))  # in order to pretty print the result
 
         :Output::
 
@@ -192,7 +194,7 @@ class _Scholarly:
 
             .. testcode::
 
-                search_query = scholarly.search_author('Marty Banks, Berkeley')
+                search_query = scholarly.search_author("Marty Banks, Berkeley")
                 scholarly.pprint(next(search_query))
 
         :Output::
@@ -293,7 +295,7 @@ class _Scholarly:
 
             .. testcode::
 
-                search_query = scholarly.search_author_id('EmD_lTEAAAAJ')
+                search_query = scholarly.search_author_id("EmD_lTEAAAAJ")
                 scholarly.pprint(search_query)
 
         :Output::
@@ -321,7 +323,7 @@ class _Scholarly:
 
         .. testcode::
 
-            search_query = scholarly.search_keyword('Haptics')
+            search_query = scholarly.search_keyword("Haptics")
             scholarly.pprint(next(search_query))
 
         :Output::
@@ -354,7 +356,7 @@ class _Scholarly:
 
         .. testcode::
 
-            search_query = scholarly.search_keywords(['crowdsourcing', 'privacy'])
+            search_query = scholarly.search_keywords(["crowdsourcing", "privacy"])
             scholarly.pprint(next(search_query))
 
         :Output::
@@ -466,7 +468,7 @@ class _Scholarly:
 
         :Example::
             .. testcode::
-                search_query = scholarly.search_org('ucla')
+                search_query = scholarly.search_org("ucla")
                 print(search_query)
 
         :Output::
@@ -513,12 +515,12 @@ class _Scholarly:
         """Construct URL from requested parameters."""
         url = baseurl
 
-        yr_lo = "&as_ylo={0}".format(year_low) if year_low is not None else ""
-        yr_hi = "&as_yhi={0}".format(year_high) if year_high is not None else ""
-        citations = "&as_vis={0}".format(1 - int(citations))
-        patents = "&as_sdt={0},33".format(1 - int(patents))
+        yr_lo = f"&as_ylo={year_low}" if year_low is not None else ""
+        yr_hi = f"&as_yhi={year_high}" if year_high is not None else ""
+        citations = f"&as_vis={1 - int(citations)}"
+        patents = f"&as_sdt={1 - int(patents)},33"
         sortby = ""
-        start = "&start={0}".format(start_index) if start_index > 0 else ""
+        start = f"&start={start_index}" if start_index > 0 else ""
 
         if sort_by == "date":
             if include_last_year == "abstracts":

@@ -93,14 +93,12 @@ class ProxyMode(str, Enum):
     TOR_INTERNAL = "TOR_INTERNAL"
 
 
-""" Lightweight Data Structure to keep distribution of citations of the years """
 CitesPerYear = Dict[int, int]
 
 
-""" Lightweight Data Structure to hold the numbers articles available or
-    not available publicly according to funding mandates
-"""
-PublicAccess = TypedDict("PublicAccess", {"available": int, "not_available": int})
+class PublicAccess(TypedDict):
+    available: int
+    not_available: int
 
 
 class BibEntry(TypedDict, total=False):

@@ -206,7 +206,7 @@ class AuthorParser:
                 and not flag
             ):
                 pubstart += _PAGESIZE
-                url = "{0}&cstart={1}&pagesize={2}".format(
+                url = "{}&cstart={}&pagesize={}".format(
                     url_citations, pubstart, _PAGESIZE
                 )
                 soup = self.nav._get_soup(url)
@@ -307,9 +307,9 @@ class AuthorParser:
 
         .. testcode::
 
-            search_query = scholarly.search_author('Steven A Cholewiak')
+            search_query = scholarly.search_author("Steven A Cholewiak")
             author = next(search_query)
-            author = scholarly.fill(author, sections=['basics', 'citations', 'coauthors'])
+            author = scholarly.fill(author, sections=["basics", "citations", "coauthors"])
             scholarly.pprint(author)
 
         :Output::
@@ -458,7 +458,7 @@ class AuthorParser:
                 )
             url_citations = _CITATIONAUTH.format(author["scholar_id"])
             url_citations += sortby_str
-            url = "{0}&pagesize={1}".format(url_citations, _PAGESIZE)
+            url = f"{url_citations}&pagesize={_PAGESIZE}"
             soup = self.nav._get_soup(url)
 
             if sections == []:

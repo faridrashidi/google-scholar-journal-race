@@ -38,7 +38,7 @@ class MaxTriesExceededException(Exception):
     """Maximum number of tries by scholarly reached"""
 
 
-class ProxyGenerator(object):
+class ProxyGenerator:
     def __init__(self):
         # setting up logger
         self.logger = logging.getLogger("scholarly")
