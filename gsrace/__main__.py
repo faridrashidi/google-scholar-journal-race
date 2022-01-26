@@ -1,15 +1,16 @@
-import bar_chart_race as bcr
 import click
 import pandas as pd
 from joblib import Parallel, delayed
 from tqdm import tqdm
 
-import gsrace as gsr
-from gsrace._scholarly import _Scholarly
-from gsrace.utils import tqdm_joblib
+from gsrace import __version__
+
+from ._bar_chart_race import bar_chart_race
+from ._scholarly import _Scholarly
+from .utils import tqdm_joblib
 
 
-@click.version_option(version=gsr.__version__)
+@click.version_option(version=__version__)
 @click.command()
 @click.argument("google_scholar_id", required=True, type=str)
 @click.option(
@@ -35,18 +36,6 @@ def main(google_scholar_id, output_directory, n_threads):
     name = author["name"]
     print(f"Looking for {name}'s papers trend.")
     pubs = scholarly.fill(author, sections=["publications"])["publications"]
-    # papers = [
-    #     scholarly.fill(p)
-    #     for p in tqdm.tqdm(
-    #         pubs,
-    #         ascii=True,
-    #         ncols=120,
-    #         desc="Extracting papers",
-    #         position=0,
-    #         disable=False,
-    #         unit="paper",
-    #     )
-    # ]
     with tqdm_joblib(
         tqdm(
             ascii=True,
@@ -104,7 +93,7 @@ def main(google_scholar_id, output_directory, n_threads):
     df2 = df2.cumsum(axis=0)
 
     print("Generating plot...")
-    bcr.bar_chart_race(
+    bar_chart_race(
         df=df2,
         filename=f"{output_directory}/{name}.gif",
         orientation="h",

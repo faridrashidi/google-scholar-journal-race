@@ -24,6 +24,7 @@ setup(
     install_requires=[
         "tqdm",
         "pandas",
+        "matplotlib",
         "click",
         "arrow",
         "beautifulsoup4",
@@ -35,8 +36,6 @@ setup(
         "requests[socks]",
         "selenium",
         "stem",
-        "bar_chart_race @ "
-        "git+ssh://git@github.com/dexplo/bar_chart_race.git#egg=bar_chart_race",
     ],
     packages=find_packages(),
     entry_points={"console_scripts": ["gsrace = gsrace.__main__:main"]},
