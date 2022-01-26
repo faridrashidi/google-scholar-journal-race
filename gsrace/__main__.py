@@ -25,14 +25,16 @@ def main():
     google_scholar_id = args[0]
 
     author = gsr.scholarly.search_author_id(google_scholar_id)
+    name = author["name"]
+    print(f"Looking for {name}'s papers trend.")
     pubs = gsr.scholarly.fill(author, sections=["publications"])["publications"]
     papers = [
         gsr.scholarly.fill(p)
         for p in tqdm.tqdm(
             pubs,
             ascii=True,
-            ncols=100,
-            desc="Extracting papers...",
+            ncols=120,
+            desc="Extracting papers",
             position=0,
             disable=False,
             unit="paper",
@@ -81,7 +83,7 @@ def main():
     print("Generating plot...")
     bcr.bar_chart_race(
         df=df2,
-        filename=f"./{author['name']}.gif",
+        filename=f"./{name}.gif",
         orientation="h",
         sort="desc",
         n_bars=min(24, df2.shape[0]),
@@ -101,7 +103,7 @@ def main():
             "size": 11,
         },
         colors="dark24",
-        title=f"{author['name']}'s publications",
+        title=f"{name}'s publications",
         bar_size=0.95,
         bar_textposition="inside",
         bar_texttemplate="{x:,.0f}",
@@ -116,7 +118,7 @@ def main():
         fig_kwargs={"figsize": (10, 5), "dpi": 144},
         filter_column_colors=True,
     )
-    print(f"Saved at ./{author['name']}.gif")
+    print(f"Saved at ./{name}.gif")
 
 
 if __name__ == "__main__":
