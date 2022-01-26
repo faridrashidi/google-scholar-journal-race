@@ -29,7 +29,31 @@ from .utils import tqdm_joblib
     show_default=True,
     help="Number of threads to use for extracting papers information.",
 )
-def main(google_scholar_id, output_directory, n_threads):
+@click.option(
+    "--dpi",
+    "-d",
+    default=142,
+    type=int,
+    show_default=True,
+    help="Resolution of output GIF file.",
+)
+@click.option(
+    "--height",
+    "-h",
+    default=5,
+    type=int,
+    show_default=True,
+    help="Height of output GIF file.",
+)
+@click.option(
+    "--width",
+    "-w",
+    default=10,
+    type=int,
+    show_default=True,
+    help="Width of output GIF file.",
+)
+def main(google_scholar_id, output_directory, n_threads, height, width, dpi):
     """Google Scholar Journal Race."""
     scholarly = _Scholarly()
     author = scholarly.search_author_id(google_scholar_id)
@@ -127,7 +151,7 @@ def main(google_scholar_id, output_directory, n_threads):
         fig=None,
         writer=None,
         # bar_kwargs={'alpha': .7},
-        fig_kwargs={"figsize": (10, 5), "dpi": 144},
+        fig_kwargs={"figsize": (width, height), "dpi": dpi},
         filter_column_colors=True,
     )
     print(f"Ouptut was saved at {output_directory}/{name}.gif")
