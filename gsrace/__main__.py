@@ -1,9 +1,12 @@
 import bar_chart_race as bcr
 import click
 import pandas as pd
-import tqdm
+from joblib import Parallel, delayed
+from tqdm import tqdm
 
 import gsrace as gsr
+from gsrace._scholarly import _Scholarly
+from gsrace.utils import tqdm_joblib
 
 
 @click.version_option(version=gsr.__version__)
@@ -17,24 +20,45 @@ import gsrace as gsr
     show_default=True,
     help="Directory to write the output GIF file.",
 )
-def main(google_scholar_id, output_directory):
+@click.option(
+    "--n_threads",
+    "-p",
+    default=4,
+    type=int,
+    show_default=True,
+    help="Number of threads to use for extracting papers information.",
+)
+def main(google_scholar_id, output_directory, n_threads):
     """Google Scholar Journal Race."""
-    author = gsr.scholarly.search_author_id(google_scholar_id)
+    scholarly = _Scholarly()
+    author = scholarly.search_author_id(google_scholar_id)
     name = author["name"]
     print(f"Looking for {name}'s papers trend.")
-    pubs = gsr.scholarly.fill(author, sections=["publications"])["publications"]
-    papers = [
-        gsr.scholarly.fill(p)
-        for p in tqdm.tqdm(
-            pubs,
+    pubs = scholarly.fill(author, sections=["publications"])["publications"]
+    # papers = [
+    #     scholarly.fill(p)
+    #     for p in tqdm.tqdm(
+    #         pubs,
+    #         ascii=True,
+    #         ncols=120,
+    #         desc="Extracting papers",
+    #         position=0,
+    #         disable=False,
+    #         unit="paper",
+    #     )
+    # ]
+    with tqdm_joblib(
+        tqdm(
             ascii=True,
             ncols=120,
             desc="Extracting papers",
+            total=len(pubs),
             position=0,
             disable=False,
             unit="paper",
         )
-    ]
+    ):
+        papers = Parallel(n_jobs=n_threads)(delayed(scholarly.fill)(p) for p in pubs)
 
     data = []
     for p in papers:
@@ -71,7 +95,11 @@ def main(google_scholar_id, output_directory):
     df["datetime"] = pd.to_datetime(df[["year", "month", "day"]])
     df["value"] = 1
     df2 = df.pivot_table(
-        index="datetime", columns="journal", values="value", fill_value=0
+        index="datetime",
+        columns="journal",
+        values="value",
+        aggfunc="count",
+        fill_value=0,
     )
     df2 = df2.cumsum(axis=0)
 
