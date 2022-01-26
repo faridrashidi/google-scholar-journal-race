@@ -2,9 +2,9 @@
 [![PyPI](https://img.shields.io/pypi/v/gsrace?logo=PyPi&logoColor=FFFFFF&style=flat-square&color=orange)](https://pypi.org/project/gsrace)
 [![Downloads](https://img.shields.io/badge/dynamic/json?logo=PyPi&logoColor=FFFFFF&style=flat-square&color=blue&label=downloads&query=%24.total_downloads&url=https%3A%2F%2Fapi.pepy.tech%2Fapi%2Fprojects%2Fgsrace)](https://pepy.tech/project/gsrace)
 
-# Google scholar journal race
+# Google Scholar Journal Race
 
-This repo
+<img src="https://i.imgur.com/FNNM6WL.gif" width="547" alt="Installing and uninstalling Atom (animated gif)">
 
 ## Installation
 

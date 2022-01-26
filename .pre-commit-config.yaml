@@ -73,11 +73,6 @@ repos:
     hooks:
     -   id: doc8
         args: [--max-line-length=88]
-# -   repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
-#     rev: v2.0.0
-#     hooks:
-#     -   id: pretty-format-yaml
-#         args: [--autofix, --indent, '4']
 # -   repo: https://github.com/PyCQA/flake8
 #     rev: 4.0.1
 #     hooks:
@@ -89,11 +84,11 @@ repos:
 #     hooks:
 #     -   id: yesqa
 #         additional_dependencies: [flake8-tidy-imports, flake8-docstrings, flake8-comprehensions, flake8-bugbear, flake8-blind-except]
-# -   repo: https://github.com/pre-commit/mirrors-mypy
-#     rev: v0.800
+# -   repo: https://github.com/macisamuele/language-formatters-pre-commit-hooks
+#     rev: v2.0.0
 #     hooks:
-#     -   id: mypy
-#         additional_dependencies: [numpy, scipy, pandas]
+#     -   id: pretty-format-yaml
+#         args: [--autofix, --indent, '4']
 # -   repo: https://github.com/pre-commit/mirrors-mypy
 #     rev: v0.800
 #     hooks:
