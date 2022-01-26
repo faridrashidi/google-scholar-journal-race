@@ -1,29 +1,24 @@
-import optparse
-import sys
-
 import bar_chart_race as bcr
+import click
 import pandas as pd
 import tqdm
 
 import gsrace as gsr
 
 
-def main():
-    usage = "Usage: %prog [options] google_scholar_id"
-    parser = optparse.OptionParser(usage)
-    parser.add_option(
-        "-v", "--version", action="store_true", help="print version and quit."
-    )
-
-    (options, args) = parser.parse_args()
-    if options.version:
-        print(gsr.__version__)
-        return None
-    if len(args) != 1:
-        parser.error("No google_scholar_id given, nothing to do.")
-        sys.exit(1)
-    google_scholar_id = args[0]
-
+@click.version_option(version=gsr.__version__)
+@click.command()
+@click.argument("google_scholar_id", required=True, type=str)
+@click.option(
+    "--output_directory",
+    "-o",
+    default=".",
+    type=click.Path(file_okay=False, dir_okay=True, readable=True, resolve_path=True),
+    show_default=True,
+    help="Directory to write the output GIF file.",
+)
+def main(google_scholar_id, output_directory):
+    """Google Scholar Journal Race."""
     author = gsr.scholarly.search_author_id(google_scholar_id)
     name = author["name"]
     print(f"Looking for {name}'s papers trend.")
@@ -83,7 +78,7 @@ def main():
     print("Generating plot...")
     bcr.bar_chart_race(
         df=df2,
-        filename=f"./{name}.gif",
+        filename=f"{output_directory}/{name}.gif",
         orientation="h",
         sort="desc",
         n_bars=min(24, df2.shape[0]),
@@ -118,7 +113,7 @@ def main():
         fig_kwargs={"figsize": (10, 5), "dpi": 144},
         filter_column_colors=True,
     )
-    print(f"Saved at ./{name}.gif")
+    print(f"Ouptut was saved at {output_directory}/{name}.gif")
 
 
 if __name__ == "__main__":

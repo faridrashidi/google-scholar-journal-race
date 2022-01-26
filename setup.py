@@ -24,6 +24,7 @@ setup(
     install_requires=[
         "tqdm",
         "pandas",
+        "click",
         "arrow",
         "beautifulsoup4",
         "bibtexparser",

@@ -146,8 +146,3 @@ Thumbs.db
 
 # profiling data
 .prof
-
-# Repo specific
-{{cookiecutter.toolname}}.*
-
-# Temporary
