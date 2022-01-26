@@ -26,6 +26,7 @@ setup(
         "pandas",
         "matplotlib",
         "click",
+        "joblib",
         "arrow",
         "beautifulsoup4",
         "bibtexparser",
