@@ -4,9 +4,9 @@
 
 # Google Scholar Journal Race
 
-<img src="https://raw.githubusercontent.com/faridrashidi/google-scholar-journal-race/main/.github/demo/1.giff" width="547" alt="Installing and uninstalling Atom (animated gif 1)">
+![1](https://user-images.githubusercontent.com/2772503/151365694-77faeadb-f4ca-4b20-a48e-a63ed21721bb.gif)
 
-<img src="https://raw.githubusercontent.com/faridrashidi/google-scholar-journal-race/main/.github/demo/2.giff" width="547" alt="Installing and uninstalling Atom (animated gif 2)">
+![2](https://user-images.githubusercontent.com/2772503/151365715-795e3598-457f-4570-a213-d402a85f2aec.gif)
 
 
 ## Installation
