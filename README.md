@@ -4,10 +4,9 @@
 
 # Google Scholar Journal Race
 
-![1](https://user-images.githubusercontent.com/2772503/151365694-77faeadb-f4ca-4b20-a48e-a63ed21721bb.gif)
+![Demo 1](https://user-images.githubusercontent.com/2772503/151423387-cc2c20a2-e8ce-4613-8ed4-82b5a6ffdaac.gif)
 
-![2](https://user-images.githubusercontent.com/2772503/151365715-795e3598-457f-4570-a213-d402a85f2aec.gif)
-
+![Demo 2](https://user-images.githubusercontent.com/2772503/151365715-795e3598-457f-4570-a213-d402a85f2aec.gif)
 
 ## Installation
 
