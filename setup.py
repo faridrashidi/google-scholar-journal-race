@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from setuptools import find_packages, setup
 
 meta = {}
@@ -10,7 +8,9 @@ meta["long_description"] = open("./README.md").read()
 setup(
     name="gsrace",
     version=meta["__version__"],
-    description="Python library to show the journal race for a user on Google Scholar.",
+    description=(
+        "A tool to show the journals trends for a user's Google Scholar publications."
+    ),
     long_description=meta["long_description"],
     long_description_content_type="text/markdown",
     keywords="google scholar race cli",
