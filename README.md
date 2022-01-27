@@ -4,7 +4,10 @@
 
 # Google Scholar Journal Race
 
-<img src="https://i.imgur.com/FNNM6WL.gif" width="547" alt="Installing and uninstalling Atom (animated gif)">
+<img src="https://raw.githubusercontent.com/faridrashidi/google-scholar-journal-race/main/.github/demo/1.giff" width="547" alt="Installing and uninstalling Atom (animated gif 1)">
+
+<img src="https://raw.githubusercontent.com/faridrashidi/google-scholar-journal-race/main/.github/demo/2.giff" width="547" alt="Installing and uninstalling Atom (animated gif 2)">
+
 
 ## Installation
 
