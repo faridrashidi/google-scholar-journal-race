@@ -321,11 +321,13 @@ class PublicationParser:
                         "YYYY/M/D",
                         "YYYY/MM/D",
                     ]
-                    publication["bib"]["pub_year"] = arrow.get(val.text, patterns).year
-                    publication["bib"]["pub_month"] = arrow.get(
-                        val.text, patterns
-                    ).month
-                    publication["bib"]["pub_day"] = arrow.get(val.text, patterns).day
+                    try:
+                        date = arrow.get(val.text, patterns)
+                        publication["bib"]["pub_year"] = date.year
+                        publication["bib"]["pub_month"] = date.month
+                        publication["bib"]["pub_day"] = date.day
+                    except:
+                        pass
                 elif key == "description":
                     # try to find all the gsh_csp if they exist
                     abstract = val.find_all(class_="gsh_csp")

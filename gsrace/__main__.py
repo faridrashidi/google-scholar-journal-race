@@ -55,6 +55,12 @@ from .utils import tqdm_joblib
 )
 def main(google_scholar_id, output_directory, n_threads, height, width, dpi):
     """Google Scholar Journal Race."""
+    data, name, _ = extract_papers(google_scholar_id, n_threads)
+    _, df2 = build_dataframe(data)
+    generate_plot(df2, output_directory, name, width, height, dpi)
+
+
+def extract_papers(google_scholar_id, n_threads):
     scholarly = _Scholarly()
     author = scholarly.search_author_id(google_scholar_id)
     name = author["name"]
@@ -75,36 +81,43 @@ def main(google_scholar_id, output_directory, n_threads, height, width, dpi):
 
     data = []
     for p in papers:
-        if "journal" in p["bib"] and "pub_year" in p["bib"]:
-            journal = p["bib"]["journal"].lower()
-            year = p["bib"]["pub_year"]
-            month = p["bib"]["pub_month"]
-            day = p["bib"]["pub_day"]
-            data.append(
-                {
-                    "journal": journal,
-                    "year": year,
-                    "month": month,
-                    "day": day,
-                }
-            )
-        elif "conference" in p["bib"] and "pub_year" in p["bib"]:
-            conference = p["bib"]["conference"].lower()
-            year = p["bib"]["pub_year"]
-            month = p["bib"]["pub_month"]
-            day = p["bib"]["pub_day"]
-            data.append(
-                {
-                    "journal": conference,
-                    "year": year,
-                    "month": month,
-                    "day": day,
-                }
-            )
+        if "pub_year" in p["bib"] and "pub_month" in p["bib"] and "pub_day" in p["bib"]:
+            if "journal" in p["bib"]:
+                journal = p["bib"]["journal"].lower()
+                year = p["bib"]["pub_year"]
+                month = p["bib"]["pub_month"]
+                day = p["bib"]["pub_day"]
+                data.append(
+                    {
+                        "journal": journal,
+                        "year": year,
+                        "month": month,
+                        "day": day,
+                    }
+                )
+            elif "conference" in p["bib"]:
+                conference = p["bib"]["conference"].lower()
+                year = p["bib"]["pub_year"]
+                month = p["bib"]["pub_month"]
+                day = p["bib"]["pub_day"]
+                data.append(
+                    {
+                        "journal": conference,
+                        "year": year,
+                        "month": month,
+                        "day": day,
+                    }
+                )
         else:
             pass
+    return data, name, papers
 
+
+def build_dataframe(data):
     df = pd.DataFrame(data)
+    df["journal"] = df["journal"].apply(
+        lambda x: x.split(" ")[0] if "arxiv" in x else x
+    )
     df["datetime"] = pd.to_datetime(df[["year", "month", "day"]])
     df["value"] = 1
     df2 = df.pivot_table(
@@ -115,7 +128,10 @@ def main(google_scholar_id, output_directory, n_threads, height, width, dpi):
         fill_value=0,
     )
     df2 = df2.cumsum(axis=0)
+    return df, df2
 
+
+def generate_plot(df2, output_directory, name, width, height, dpi):
     print("Generating plot...")
     bar_chart_race(
         df=df2,
@@ -139,7 +155,7 @@ def main(google_scholar_id, output_directory, n_threads, height, width, dpi):
             "size": 11,
         },
         colors="dark24",
-        title=f"{name}'s publications",
+        title=f"{name}'s publications race",
         bar_size=0.95,
         bar_textposition="inside",
         bar_texttemplate="{x:,.0f}",
