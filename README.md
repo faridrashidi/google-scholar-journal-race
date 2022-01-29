@@ -17,5 +17,6 @@ pip install gsrace
 ## Usage
 
 ```
+gsrace --help
 gsrace l8WuQJgAAAAJ
 ```

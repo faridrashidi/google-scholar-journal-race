@@ -132,7 +132,7 @@ def build_dataframe(data):
 
 
 def generate_plot(df2, output_directory, name, width, height, dpi):
-    print("Generating plot...")
+    print("Generating plot (will take some time, several minutes perhaps)...")
     bar_chart_race(
         df=df2,
         filename=f"{output_directory}/{name}.gif",
